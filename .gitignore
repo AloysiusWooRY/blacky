@@ -1,2 +1,4 @@
 node_modules/
 package-lock.json
+bot.js
+commands/hi.js

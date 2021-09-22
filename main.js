@@ -1,6 +1,5 @@
-const Discord = require('discord.js');
-const bot = new Discord.Client(); //{ partials: ["MESSAGE", "CHANNEL", "REACTION"] }
-
+const Discord= require('discord.js');
+const bot = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILD_VOICE_STATES] }); //{ partials: ["MESSAGE", "CHANNEL", "REACTION"] }
 bot.commands = new Discord.Collection();
 bot.events = new Discord.Collection();
 
@@ -8,4 +7,9 @@ bot.events = new Discord.Collection();
     require(`./handlers/${handler}`)(bot, Discord);
 })
 
-bot.login(process.env.token);//
+// bot.on('ready', () => {
+//     console.log("Bot is online")
+//     bot.user.setActivity("testing", {type: 'COMPETING', name: "abc"})
+// })
+
+bot.login(process.env.token);//process.env.token
