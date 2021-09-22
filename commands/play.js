@@ -154,6 +154,9 @@ const skip_song = async (message, server_queue, bot) => {
 
 const stop_song = async (message, server_queue, bot) => {
     if (!message.member.voice.channel) return userInputConsole(message, [bot, "Oi, you need to be in VC lah! Anyhow only"], "error")
+    if (!server_queue) {
+        return userInputConsole(message, [bot, "Bruh got no song in queue, what talking u!"], "error");
+    }
     server_queue.songs = [];
     server_queue.connection.destroy();
     queue.delete(message.guild.id);
