@@ -23,12 +23,11 @@
     "ffmpeg-static": "^4.4.0",
     "libsodium-wrappers": "^0.7.9",
     "moment": "^2.28.0",
+    "node": "^14.17.6",
+    "node-abort-controller": "^3.0.0",
     "nodemon": "^2.0.12",
     "request": "^2.88.2",
     "yt-search": "^2.10.1",
     "ytdl-core": "^4.9.1"
-  },
-  "engines": {
-    "node": "16.x"
   }
 }
