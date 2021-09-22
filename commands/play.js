@@ -14,11 +14,11 @@ module.exports = {
         switch (button.customId) {
             case "buttonSkip":
                 console.log("Skipped")
-                skip_song(button, server_queue)
+                skip_song(button, server_queue, bot)
                 break
             case "buttonStop":
                 console.log("Stopped")
-                stop_song(button, server_queue)
+                stop_song(button, server_queue, bot)
                 break
         }
     },
@@ -96,11 +96,11 @@ module.exports = {
         }
 
         else if (cmd === 'skip') {
-            skip_song(message, server_queue)
+            skip_song(message, server_queue, bot)
             message.delete()
         }
         else if (cmd === 'stop') {
-            stop_song(message, server_queue)
+            stop_song(message, server_queue, bot)
             message.delete()
         }
         else if (cmd === 'test') updateQueue(message);
@@ -141,8 +141,8 @@ const video_player = async (message, song) => {
     //await song_queue.text_channel.send(`${guild.emojis.cache.get('591214274685304833')} Now playing ***${song.title}***`)
 }
 
-const skip_song = async (message, server_queue) => {
-    if (!message.member.voice.channel) return //message.channel.send("Oi, you need to be in VC lah! Anyhow only");
+const skip_song = async (message, server_queue, bot) => {
+    if (!message.member.voice.channel) return userInputConsole(message, [bot, "Oi, you need to be in VC lah! Anyhow only"], "error")
     if (!server_queue) {
         return userInputConsole(message, [bot, "Bruh got no song in queue, what talking u!"], "error");
     }
@@ -152,8 +152,8 @@ const skip_song = async (message, server_queue) => {
     updateQueue(message);
 }
 
-const stop_song = async (message, server_queue) => {
-    if (!message.member.voice.channel) return //message.channel.send("Oi, you need to be in VC lah! Anyhow only");
+const stop_song = async (message, server_queue, bot) => {
+    if (!message.member.voice.channel) return userInputConsole(message, [bot, "Oi, you need to be in VC lah! Anyhow only"], "error")
     server_queue.songs = [];
     server_queue.connection.destroy();
     queue.delete(message.guild.id);
@@ -193,7 +193,7 @@ const updateQueue = async (message) => {
 const userInputConsole = async (message, song, command) => {
 
     const firstMsg = (await message.channel.messages.fetch({ after: 1, limit: 1 })).first();
-    const myDate = new Date(Date.now()).toLocaleTimeString('en-SG', { hour12: false, hour: '2-digit', minute: '2-digit' })
+    const myDate = new Date(Date.now()).toLocaleTimeString('en-SG', { hour12: false, hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Singapore' })
     let descriptionArr = firstMsg.embeds[2].description.split("\n")
 
     const videoDuration = (sec) => { return sec > 3600 ? new Date(1000 * sec).toISOString().substr(11, 8).replace(/^[0:]+/, "") : new Date(1000 * sec).toISOString().substr(14, 5).replace(/^[0:]?/, "") }
